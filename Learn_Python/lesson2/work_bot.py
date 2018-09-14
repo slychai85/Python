@@ -100,9 +100,6 @@ def main():
     # Добавляем в бота команду /planet, которая будет принимать на вход название планеты на английском, например /ephem Mars
     dp.add_handler(CommandHandler("planet", talk_planet))
 
-    # вызываем функцию, которя "отвечает" пользователю на сообщение тем же сообщением
-    dp.add_handler(MessageHandler(Filters.text, talk_planet))
-
     mybot.start_polling()
     mybot.idle()
        
