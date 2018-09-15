@@ -19,6 +19,9 @@ PROXY = {'proxy_url': 'socks5://t1.learn.python.ru:1080',
     'urllib3_proxy_kwargs': {'username': 'learn', 'password': 'python'}}
 
 
+# Добовляем ключ от бота из тайного файла
+key_bot = open("key_bot.txt", "rt").readline()
+
 # записываем отчет о работе бота в отдельный файл, чтобы можно было проверять его работу
 
 import logging
@@ -89,7 +92,7 @@ def talk_planet(bot, update):
 # Функция, которая соединяется с платформой Telegram
 
 def main():
-    mybot = Updater("636051867:AAGCi__yUUF3kKj4JmkCl52-1wfr4IbztJw", request_kwargs=PROXY)
+    mybot = Updater(key_bot, request_kwargs=PROXY)
 
     # Диспечер бота
     dp = mybot.dispatcher
