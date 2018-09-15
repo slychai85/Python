@@ -36,10 +36,16 @@ logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
 # update.message.reply_text(text) --> посылает сообщение обратно в Telegram
 
 def greet_user(bot, update):
-    text = 'Вызван /start. Я готов тебя слушать =)'
+    text = 'Я готов тебя слушать =)'
     update.message.reply_text(text)
 
-# Функция "отвечает" пользователю
+# Функция "отвечает" пользователю эхом
+def talk_to_me(bot, update):
+    user_text = update.message.text 
+    print(user_text)
+    update.message.reply_text(user_text)
+
+# Функция "отвечает" пользователю при вводе /planet ...
 def talk_planet(bot, update):
     
     # Получаем от юзера сообщение
@@ -82,10 +88,51 @@ def talk_planet(bot, update):
         elif user_text[1] == 'Pluto':
             pluto = ephem.Pluto(date)
             update.message.reply_text(ephem.constellation(pluto))
-    else:
-        update.message.reply_text("Я могу выводить только в каком созвездии сегодня находится планета.")
+        else:
+            update.message.reply_text("""Вы ввели не верное название планеты. Введите любую планету из этого списка:
+            - Sun
+            - Mars
+            - Mercury
+            - Venus
+            - Jupiter
+            - Saturn
+            - Uranus
+            - Neptune
+            - Pluto
+            """)
     
+
+def len_text(bot, update):
+    """
+        Функция подсчитвает кол-во слов присланных от пользователя
+    """
+    # Получаем от юзера сообщение
+    user_text = update.message.text
+
+    # Определяем индекс первого вхождения кавычки
+    try:
+        first_index = user_text.index('"')
+        our_text = user_text[first_index + 1:]
+    except ValueError:
+        update.message.reply_text("Поставьте в начале и в конце предложения кавычки")
+        return
+
+    # Определяем индекс второго вхождение кавычек
+    try:
+        second_index = our_text.index('"')
+        our_text = our_text[:second_index]
+    except ValueError:
+        update.message.reply_text("Поставьте в начале и в конце предложения кавычки")
+        return
     
+    # if second_index < first_index:
+    #     update.message.reply_text("Поставьте в начале и в конце предложения кавычки")
+
+
+    # Разделяем полученый текст
+    text_split = our_text.split()
+    update.message.reply_text("Вы ввели {} слов".format( len(text_split)))
+
 # ===================================Тело бота =============================
 
 
@@ -102,6 +149,12 @@ def main():
 
     # Добавляем в бота команду /planet, которая будет принимать на вход название планеты на английском, например /ephem Mars
     dp.add_handler(CommandHandler("planet", talk_planet))
+
+    # вызываем функцию, которая будет подсчитывать кол-во слов
+    dp.add_handler(CommandHandler("wordcount", len_text))
+
+    # вызываем функцию, которя "отвечает" пользователю на сообщение тем же сообщением
+    dp.add_handler(MessageHandler(Filters.text, talk_to_me))
 
     mybot.start_polling()
     mybot.idle()
