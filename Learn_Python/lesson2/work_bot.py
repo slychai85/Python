@@ -133,6 +133,10 @@ def len_text(bot, update):
     text_split = our_text.split()
     update.message.reply_text("Вы ввели {} слов".format( len(text_split)))
 
+def calculate( text ):
+    
+
+
 # ===================================Тело бота =============================
 
 
@@ -152,6 +156,8 @@ def main():
 
     # вызываем функцию, которая будет подсчитывать кол-во слов
     dp.add_handler(CommandHandler("wordcount", len_text))
+
+    dp.add_handler(CommandHandler("calcul", calculate))
 
     # вызываем функцию, которя "отвечает" пользователю на сообщение тем же сообщением
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
