@@ -1,2 +1,4 @@
 *.pyc
 bot.log
+key_bot.txt
+.vscode
