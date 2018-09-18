@@ -26,16 +26,8 @@ pupil_journal = [{'school_class': '4a', 'scores': [3,4,4,5,2]},
 average_shcool = 0
 average_class = 0
 
-# Переменнная хранит количество оценок либо по всей школе, либо по классу
-count = 0
-
 # Переменная хранит название школьного класса
 class_name = ''
-
-# Функция принимает два числа и возвращает частное
-def average( num1, num2 ):
-    return num1 / num2
-
 
 
 #                    Посчитать и вывести средний балл по всей школе
@@ -51,24 +43,23 @@ for school_class in pupil_journal:
     # Достаем название школьного класса и заносим ее в переменную
     class_name = school_class['school_class']
 
-    # Определяем общее кол-во оценок по всей школе
-    count += len( school_class['scores'] )
-
+    # Проходим циклом по каждому классу
     for score in school_class['scores']:
 
-        # Складываем все оценки, которые имеются в pupil_journal
-        average_shcool += score
-        
         # Складываем все оценки, которые имеются в данном итерируемом классе
         average_class += score
+        
+    # Складываем средний бал, которые имеются каждого класса
+    average_shcool += average_class / len( school_class['scores'] )
 
     # Выводем сообщение на экран о среднем бале по классу
-    print('В вашем классе "{}" средний балл учеников: {:.1f}'.format(class_name, average( average_class, len(school_class['scores']) ) ) )
+    # При этом сумму оценок по классу делим на кол-во оценок
+    print('В вашем классе "{}" средний балл учеников: {:.1f}'.format(class_name, average_class / len(school_class['scores'] ) ) )
 
 
-# Выводим полученную среднюю оценку используя функцию average,
-# оставляя после запятой два знака
-print ('Средний балл в нашей школе: {:.2f}'.format( average( average_shcool, count ) ))
+# Выводим полученную среднюю оценку оставляя после запятой два знака
+# При этом сумму средних оценок классов делим на кол-во классов
+print ('Средний балл в нашей школе: {:.2f}'.format( average_shcool / len( pupil_journal ) ))
 
 
 #   >>>   В вашем классе "4a" средний балл учеников: 3.6
