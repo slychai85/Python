@@ -20,10 +20,10 @@ PROXY = {'proxy_url': 'socks5://t1.learn.python.ru:1080',
 
 
 # Добовляем ключ от бота из тайного файла
-key_bot = open("key_bot.txt", "rt").readline()
+with open("key_bot.txt", "rt") as f:
+    key_bot = f.read()
 
 # записываем отчет о работе бота в отдельный файл, чтобы можно было проверять его работу
-
 import logging
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
@@ -42,17 +42,18 @@ def greet_user(bot, update):
 # Функция "отвечает" пользователю эхом
 def talk_to_me(bot, update):
     user_text = update.message.text 
-    print(user_text)
     update.message.reply_text(user_text)
+
+# ============================= Планеты =======================================
 
 # Функция "отвечает" пользователю при вводе /planet ...
 def talk_planet(bot, update):
     
-    # Получаем от юзера сообщение
-    user_text = update.message.text
+    # Получаем от юзера сообщение и складываем в список
+    user_text = update.message.text.split()
 
-    # складываем в список полученное сообщение, разделяя пробелом
-    user_text = user_text.split(' ')
+    # Ответ пользователю если он неверно ввел планету
+    text = 'Такого космического тела нет!'
 
     # Проверяем полученое сообщение
     if user_text[0] == '/planet':
@@ -60,48 +61,23 @@ def talk_planet(bot, update):
         # Определяем календарную дату
         date = datetime.datetime.now()
 
-        # Определяем название планеты и выводим в сообщение в каком созвездии сегодня находится планета.
-        if user_text[1] == 'Sun':
-            sun = ephem.Sun(date)
-            update.message.reply_text(ephem.constellation(sun))
-        elif user_text[1] == 'Mars':
-            mars = ephem.Mars(date)
-            update.message.reply_text(ephem.constellation(mars))
-        elif user_text[1] == 'Mercury':
-            mercury = ephem.Mercury(date)
-            update.message.reply_text(ephem.constellation(mercury))
-        elif user_text[1] == 'Venus':
-            venus = ephem.Venus(date)
-            update.message.reply_text(ephem.constellation(venus))
-        elif user_text[1] == 'Jupiter':
-            jupiter = ephem.Jupiter(date)
-            update.message.reply_text(ephem.constellation(jupiter))
-        elif user_text[1] == 'Saturn':
-            saturn = ephem.Saturn(date)
-            update.message.reply_text(ephem.constellation(saturn))
-        elif user_text[1] == 'Uranus':
-            uranus = ephem.Uranus(date)
-            update.message.reply_text(ephem.constellation(uranus))
-        elif user_text[1] == 'Neptune':
-            neptune = ephem.Neptune(date)
-            update.message.reply_text(ephem.constellation(neptune))
-        elif user_text[1] == 'Pluto':
-            pluto = ephem.Pluto(date)
-            update.message.reply_text(ephem.constellation(pluto))
-        else:
-            update.message.reply_text("""Вы ввели не верное название планеты. Введите любую планету из этого списка:
-            - Sun
-            - Mars
-            - Mercury
-            - Venus
-            - Jupiter
-            - Saturn
-            - Uranus
-            - Neptune
-            - Pluto
-            """)
-    
+        # Приводим введенную планету в корректную форму
+        user_text[1] = user_text[1].lower().capitalise()
 
+        # Проверяем второе слово через getattr и если это не планета, то ловим ошибку
+        try:
+            user_planet = getattr( ephem, user_text[1].lower().capitalise() ) #     З - заглавная буква =)
+        except AttributeError:
+            update.message.reply_text( text )
+            return
+        
+        # Определяем нахождение космического тела
+        position = user_planet( date )
+
+        # Отправляем пользователю сообщение
+        update.message.reply_text( 'Космическое тело сейчас находится в созвездии {}'.format( str(ephem.constellation( position ))) )
+
+# Функция ведет подсчет введеных слов пользователя 
 def len_text(bot, update):
     """
         Функция подсчитвает кол-во слов присланных от пользователя
@@ -124,19 +100,41 @@ def len_text(bot, update):
     except ValueError:
         update.message.reply_text("Поставьте в начале и в конце предложения кавычки")
         return
-    
-    # if second_index < first_index:
-    #     update.message.reply_text("Поставьте в начале и в конце предложения кавычки")
-
 
     # Разделяем полученый текст
     text_split = our_text.split()
     update.message.reply_text("Вы ввели {} слов".format( len(text_split)))
 
 
+# Функция калькулятор
+def calcul(bot, update):
     
+    # Полученное сообщение от пользователя
+    user_text = update.message.text.split()
+
+    # Арифметические знаки
+    symbol = '+-*/'
+
+    # проверка на то, чтобы в конце был знак '='
+    if not user_text[-1] == '=':
+        update.message.reply_text('Поставте в конце знак "=" (равно)')
+    elif not user_text[2] in symbol:
+        update.message.reply_text('Такого "{}" нет математического знака'.format( user_text[2] ))
+    elif user_text[2] == '/' and user_text[3] == 0:
+        update.message.reply_text('На ноль делить нельзя. Это может делать, только Чак Норис.')
+    elif user_text[2] == '+':
+        return update.message.reply_text(int(user_text[1]) + int( user_text[3] ) ) # добавить try... except
+    elif user_text[2] == '-':
+        return update.message.reply_text(int(user_text[1]) - int( user_text[3] ) ) # добавить try... except
+    elif user_text[2] == '*':
+        return update.message.reply_text(int(user_text[1]) * int( user_text[3] ) ) # добавить try... except
+    elif user_text[2] == '/' and user_text[3] != 0:
+        return update.message.reply_text(int(user_text[1]) / int( user_text[3] ) ) # добавить try... except
+        
 
 
+
+    
 # ===================================Тело бота =============================
 
 
@@ -157,7 +155,8 @@ def main():
     # вызываем функцию, которая будет подсчитывать кол-во слов
     dp.add_handler(CommandHandler("wordcount", len_text))
 
-    # dp.add_handler(CommandHandler("calcul", calculate))
+    # вызов функции калькулятор
+    dp.add_handler(CommandHandler("calcul", calcul))
 
     # вызываем функцию, которя "отвечает" пользователю на сообщение тем же сообщением
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
