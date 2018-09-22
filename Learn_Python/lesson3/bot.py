@@ -65,15 +65,15 @@ def talk_planet(bot, update):
         date = datetime.datetime.now()
 
         # Приводим введенную планету в корректную форму
-        user_text[1] = user_text[1].lower().capitalise()
+        user_text[1] = user_text[1].lower().capitalize()
 
         # Проверяем второе слово через getattr и если это не планета, то ловим ошибку
         try:
-            user_planet = getattr( ephem, user_text[1].lower().capitalise() ) #     З - заглавная буква =)
+            user_planet = getattr( ephem, user_text[1] ) 
         except AttributeError:
             update.message.reply_text( text )
             return
-        
+
         # Определяем нахождение космического тела
         position = user_planet( date )
 
