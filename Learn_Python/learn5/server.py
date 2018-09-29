@@ -25,6 +25,16 @@ def index():
     result += "<p><b>Дата:</b> %s</p>" % ( cur_date )
     return result
 
+# Обработка переменных
+@app.route( "/news" )
+def all_the_news( ):
+    colors = ['green', 'red', 'blue', 'white']
+    try:
+        limit = int(request.args.get( 'limit', 'all' ))
+    except:
+        limit = 11
+    color = request.args.get('color') if request.args.get('color') in colors else 'black'
+    return '<h1 style="color: %s">News: <small>%s</small></h1>' % ( color, limit )
 
 # Для создания новостных страниц
 @app.route( "/news/<int:news_id>")
