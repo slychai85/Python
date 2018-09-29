@@ -47,7 +47,7 @@ def talk_to_me(bot, update):
     user_text = update.message.text 
     update.message.reply_text(user_text)
 
-# ============================= Планеты =======================================
+# ============================= Планеты =================================
 
 # Функция "отвечает" пользователю при вводе /planet ...
 def talk_planet(bot, update):
@@ -111,14 +111,6 @@ def len_text(bot, update):
 
 # Функция калькулятор
 def calcul(bot, update):
-
-    # custom_keyboard = [['top-left', 'top-right'],
-    #                    ['bottom-left', 'bottom-right']]
-
-    # reply_markup = bot.ReplyKeyboardMarkup(custom_keyboard)
-    # bot.send_message(chat_id=update.message.chat_id,
-    #                 text="Custom Keyboard Test",
-    #                 reply_markup=reply_markup)
     
     # Полученное сообщение от пользователя
     user_text = update.message.text.split()
@@ -135,29 +127,27 @@ def calcul(bot, update):
         update.message.reply_text('На ноль делить нельзя. Это может делать, только Чак Норис.')
     elif user_text[2] == '+':
         try:
-            return update.message.reply_text(int(user_text[1]) + int( user_text[3] ) ) # добавить try... except
+            return update.message.reply_text(int(user_text[1]) + int( user_text[3] ) ) 
         except:
             update.message.reply_text('Я могу работать только с целыми числами.')
     elif user_text[2] == '-':
         try:
-            return update.message.reply_text(int(user_text[1]) - int( user_text[3] ) ) # добавить try... except
+            return update.message.reply_text(int(user_text[1]) - int( user_text[3] ) )
         except:
             update.message.reply_text('Я могу работать только с целыми числами.')
     elif user_text[2] == '*':
         try:
-            return update.message.reply_text(int(user_text[1]) * int( user_text[3] ) ) # добавить try... except
+            return update.message.reply_text(int(user_text[1]) * int( user_text[3] ) ) 
         except:
             update.message.reply_text('Я могу работать только с целыми числами.')
     elif user_text[2] == '/' and user_text[3] != 0:
         try:
-            return update.message.reply_text(int(user_text[1]) / int( user_text[3] ) ) # добавить try... except
+            return update.message.reply_text(int(user_text[1]) / int( user_text[3] ) ) 
         except:
             update.message.reply_text('Я могу работать только с целыми числами.')
         
 
 
-
-    
 # ===================================Тело бота =============================
 
 

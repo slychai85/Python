@@ -27,3 +27,4 @@ read_file = read_file.replace('.', '!')
 # Сохраните результат в файл referat2.txt
 with open('referat2.txt', 'w') as f:
     f.write( read_file ) 
+    
