@@ -1,7 +1,8 @@
 from datetime import datetime
-from flask import Flask
+from flask import Flask, abort, request
 
 # Импортирую свою функцию
+from news_list import all_news
 from req import get_weather
 
 # Переменные для подставления в url
@@ -23,6 +24,19 @@ def index():
     result += "<p><b>Город:</b> %s</p>" % ( weather['name'] )
     result += "<p><b>Дата:</b> %s</p>" % ( cur_date )
     return result
+
+
+# Для создания новостных страниц
+@app.route( "/news/<int:news_id>")
+def news_by_id( news_id ):
+    news_to_show = [news for news in all_news if news['id'] == news_id]
+    if len( news_to_show ) == 1:
+        result = "<h1>%(title)s</h1><p><i>%(date)s</i></p><p>%(text)s</p>"
+        result = result % news_to_show[0]
+        return result
+    else:
+        abort( 404 )
+
 
 # Если запускается напрямую, его нужно запустить
 if __name__ == "__main__":
