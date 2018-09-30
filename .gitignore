@@ -1,5 +1,6 @@
 *.pyc
-bot.log
+*.log
 key_bot.txt
-.vscode
-env
+.vscode/
+env/
+__pycache__/

@@ -45,7 +45,7 @@ def news_by_id( news_id ):
         result = result % news_to_show[0]
         return result
     else:
-        abort( 404 )
+        abort(404)
 
 
 # Если запускается напрямую, его нужно запустить
