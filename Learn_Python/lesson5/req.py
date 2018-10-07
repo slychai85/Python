@@ -1,6 +1,7 @@
 import requests
 
 def get_html(url):
+    # проверка статуса ответа
     try:
         result = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
         result.raise_for_status()
@@ -9,8 +10,4 @@ def get_html(url):
         print ( e )
         return False
 
-# data = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
-# html = get_html('https://learn.lingvist.com/#account?')
-
-# print( html )
 
