@@ -21,13 +21,15 @@ list_dct = []
 dct_id = {}
 # Список необходимых полей на главной страницы документа
 keys_44fz = [
-    'Способ определения поставщика (подрядчика, исполнителя)',
-    'Размещение осуществляет',
-    'Сведения о связи с позицией плана-графика',
-    'Начальная (максимальная) цена контракта',
-    'Место доставки товара, выполнения работы или оказания услуги',
-    'Сроки поставки товара или завершения работы либо график оказания услуг',
-    'Размер обеспечения исполнения контракта',
+    """Сроки поставки товара или завершения работы либо
+                график оказания услуг"""
+    # 'Способ определения поставщика (подрядчика, исполнителя)',
+    # 'Размещение осуществляет',
+    # 'Сведения о связи с позицией плана-графика',
+    # 'Начальная (максимальная) цена контракта',
+    # 'Место доставки товара, выполнения работы или оказания услуги',
+    # 'Сроки поставки товара или завершения работы либо график оказания услуг',
+    # 'Размер обеспечения исполнения контракта',
     # документы - все ссылки на странице находятся в классе ' attachment' class displayTable
     # Результаты определения поставщика - название победитенля и его организационно правовая форма
     # Журнал событий - Дата извещения о проведении аукциона
@@ -69,6 +71,7 @@ def parsing_main_goc(url, tag, class_tag, keys, list_dct=list_dct, dop_tag='a'):
         try:
             # Проверка найденного значения среди необходимых полей
             if item.text.strip() in keys:
+                print(item.text.strip())
                 # Текст внутри необходимого тега
                 info = item.find_next_sibling(tag)
                 # Добавление в словарь ключ и значени
@@ -147,42 +150,11 @@ for link in list_links:
     parsing_main_goc(common_url, 'td', 'noticeTdFirst fontBoldTextTd', keys_44fz, list_dct)
     # Меняем url документа на следующюю вкладку
     common_url = common_url.replace(tab_fz44[0], tab_fz44[1])
-    print(common_url)
     # Парсим следующую вкладку документа
     parsing_link_doc(common_url, 'div', 'displayTable', list_dct, 'a')
 
 
-print(list_dct)
+# print(list_dct)
 
 # ---------------------------------------------------------------------------
 
-# http://www.zakupki.gov.ru/epz/order/extendedsearch/results.html?pageNumber=1&recordsPerPage=_50&fz44=on&fz223=on&ppRf615=on&af=on&ca=on&pc=on&pa=on&priceFromGeneral=1111111111&priceToGeneral=22222222222&updateDateFrom=18.10.2018&updateDateTo=18.10.2018
-# Составляем переменные url, чтобы составить правильный запрос
-# af=on - подача заявок
-# ca=on - работа комиссии
-# pc=on - процедура завершена
-# pa=on - процедура отменена
-# priceFromGeneral - minimum price
-# priceToGeneral - max price
-# params = {
-#         'pageNumber': 1,
-#         'recordsPerPage': '_50',
-#         'fz44': 'on',
-#         'fz223': 'off',
-#         'ppRf615': 'off',
-#         'af': 'off',
-#         'ca': 'off',
-#         'pc': 'on',
-#         'pa': 'off',
-#         'updateDateFrom': dt_now.strftime('%d.%m.%Y'),
-#         'updateDateTo': dt_now.strftime('%d.%m.%Y'),
-#         'priceFromGeneral': '1000000',
-#         'priceToGeneral': '2222222222'
-# }
-
-
-# fz44
-# http://www.zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html       ?regNumber=0334300027618000126
-# http://www.zakupki.gov.ru/epz/order/notice/ea44/view/documents.html         ?regNumber=0334300027618000126
-# http://www.zakupki.gov.ru/epz/order/notice/ea44/view/supplier-results.html  ?regNumber=0334300027618000126
-# http://www.zakupki.gov.ru/epz/order/notice/ea44/view/event-journal.html     ?regNumber=0334300027618000126

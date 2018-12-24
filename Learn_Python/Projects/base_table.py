@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.types import DateTime
+from datetime import datetime
 
 
 # Выбор базы данных и название файла для его создания
@@ -26,16 +28,16 @@ class BaseZakupki(Base):
     # Номер закона
     number_fz = Column(Integer)
     # Дата + время добавления в базу
-    date_time = Column(String(30))
+    date_time = Column(DateTime)
 
     # Метод класса для добавления новых данных в таблицу по полям
-    def __init__(self, id_zakupki=None, number_fz=None, date_time=None):
+    def __init__(self, id_zakupki=None, number_fz=None):
         self.id_zakupki = id_zakupki
         self.number_fz = number_fz
-        self.date_time = date_time
+        self.date_time = datetime.now()
 
     def __repr__(self):
         return '<BaseZakupki {} {} {}>'.format(self.id_zakupki, self.number_fz, self.date_time)
 
-if __name__ == "__main__":
-    Base.metadata.create_all(bind=engine)
+# if __name__ == "__main__":
+Base.metadata.create_all(bind=engine)
