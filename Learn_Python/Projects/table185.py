@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 # Выбор базы данных и название файла для его создания
-engine = create_engine('sqlite:///table185.db')
+engine = create_engine('sqlite:///table185.sqlite')
 
 # Сессия работы с БД - соединение с БД - bind -> привязаться
 db_session = scoped_session(sessionmaker(bind=engine))

@@ -12,6 +12,6 @@ def get_html( url, params={}):
         result.raise_for_status()
         return result.text
     except requests.exceptions.RequestsWarning as e:
-        print( 'Ошибка при запросе: {}'.format( e ) )
+        print('Ошибка при запросе: {}'.format(e))
         return False
 

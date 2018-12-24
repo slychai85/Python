@@ -1,0 +1,121 @@
+<div class="accordion" id="accordionExample">
+    <div class="card-header bg-success d-flex justify-content-center border border-dark" id="headingOne">
+        <button class="btn btn-link text-white font-weight-bold" type="button" data-toggle="collapse"
+            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Таблица 44-ФЗ
+        </button>
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <table class="table table-hover table-striped table-bordered table-responsive">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Способ определения</th>
+                    <th scope="col">Размещение осуществляет</th>
+                    <th scope="col">Начальная цена</th>
+                    <th scope="col">Место доставки</th>
+                    <th scope="col">Дата выполнения</th>
+                    <th scope="col">Размер обеспечения</th>
+                    <th scope="col">Документы</th>
+                    <th scope="col">Результаты</th>
+                    <th scope="col">Журнал событий</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.provider }}</td>
+                    <td>{{ item.customer }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.area }}</td>
+                    <td>{{ item.finish_date }}</td>
+                    <td>{{ item.contract }}</td>
+                    <td><a href="{{ item.doc_link }}">doc</a></td>
+                    <td><a href="{{ item.result_link }}">result</a></td>
+                    <td><a href="{{ item.event_log_link }}">event</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-header bg-success d-flex justify-content-center border border-dark" id="headingTwo">
+        <button class="btn btn-link collapsed text-white font-weight-bold" type="button" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="false" aria-controls="collapseTwo">
+            Таблица 223-ФЗ
+        </button>
+        </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+        <table class="table table-hover table-striped table-bordered table-responsive">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Способ определения</th>
+                    <th scope="col">Размещение осуществляет</th>
+                    <th scope="col">Начальная цена</th>
+                    <th scope="col">Место доставки</th>
+                    <th scope="col">Дата выполнения</th>
+                    <th scope="col">Размер обеспечения</th>
+                    <th scope="col">Документы</th>
+                    <th scope="col">Результаты</th>
+                    <th scope="col">Журнал событий</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {% for item in items %}
+                    <tr>
+                        <td>{{ item.provider }}</td>
+                        <td>{{ item.customer }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.area }}</td>
+                        <td>{{ item.finish_date }}</td>
+                        <td>{{ item.contract }}</td>
+                        <td><a href="{{ item.doc_link }}">doc</a></td>
+                        <td><a href="{{ item.result_link }}">result</a></td>
+                        <td><a href="{{ item.event_log_link }}">event</a></td>
+                    </tr>
+                    {% endfor %} -->
+            </tbody>
+        </table>
+    </div>
+    <div class="card-header bg-success d-flex justify-content-center border border-dark" id="headingThree">
+            <button class="btn btn-link collapsed text-white font-weight-bold" type="button" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="false" aria-controls="collapseThree">
+                Таблица 185-ФЗ
+            </button>
+        </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+        <table class="table table-hover table-striped table-bordered table-responsive">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Способ определения</th>
+                    <th scope="col">Размещение осуществляет</th>
+                    <th scope="col">Начальная цена</th>
+                    <th scope="col">Место доставки</th>
+                    <th scope="col">Дата выполнения</th>
+                    <th scope="col">Размер обеспечения</th>
+                    <th scope="col">Документы</th>
+                    <th scope="col">Результаты</th>
+                    <th scope="col">Журнал событий</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {% for item in items %}
+                    <tr>
+                        <td>{{ item.provider }}</td>
+                        <td>{{ item.customer }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.area }}</td>
+                        <td>{{ item.finish_date }}</td>
+                        <td>{{ item.contract }}</td>
+                        <td><a href="{{ item.doc_link }}">doc</a></td>
+                        <td><a href="{{ item.result_link }}">result</a></td>
+                        <td><a href="{{ item.event_log_link }}">event</a></td>
+                    </tr>
+                    {% endfor %} -->
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

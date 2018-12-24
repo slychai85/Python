@@ -1,1 +1,2 @@
-SELECT * FROM base_zakupki
+select * from zakupki44
+-- base_zakupki
